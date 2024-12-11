@@ -1,9 +1,9 @@
 import { isEqual, map } from 'lodash-es';
 import { useContext } from 'react';
-import { WeatherContext, WeatherContextProps } from '../../../WeatherBusiness';
+import { WeatherContext } from '../../../WeatherBusiness';
 
 const OtherFilter = () => {
-  const { units, setUnits } = useContext<WeatherContextProps>(WeatherContext);
+  const { units, setUnits } = useContext(WeatherContext);
   const unitsDatas = [
     {
       id: 1,

@@ -1,7 +1,7 @@
 import { isEmpty, isEqual, isUndefined, map, omitBy, toLower } from 'lodash-es';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { useQuery } from 'react-query';
-import { WeatherContext, WeatherContextProps } from '../../../WeatherBusiness';
+import { WeatherContext } from '../../../WeatherBusiness';
 import { City, List } from '../../../core/models';
 import { findLocationWithSearch } from '../../../core/requests';
 
@@ -11,7 +11,7 @@ const SearchInput = () => {
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const { units, setCity } = useContext<WeatherContextProps>(WeatherContext);
+  const { units, setCity } = useContext(WeatherContext);
   const convertedSearchObject = map(
     omitBy(
       {
