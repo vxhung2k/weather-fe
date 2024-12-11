@@ -2,10 +2,10 @@ import { icon, LatLngExpression } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useContext, useMemo } from 'react';
 import { MapContainer, Marker, TileLayer, useMap, ZoomControl } from 'react-leaflet';
-import { WeatherContext, WeatherContextProps } from '../../../WeatherBusiness';
+import { WeatherContext } from '../../../WeatherBusiness';
 
 const Map = () => {
-  const { city } = useContext<WeatherContextProps>(WeatherContext);
+  const { city } = useContext(WeatherContext);
   const position = useMemo(
     () => [city?.coordinates?.lat, city?.coordinates?.lon],
     [city?.coordinates?.lat, city?.coordinates?.lon],
@@ -22,7 +22,7 @@ const Map = () => {
   };
 
   return (
-    <div className='w-full h-[280px]'>
+    <div className='w-full h-[280px] shadow-md p-4 rounded-[8px]'>
       <MapContainer
         zoomControl={false}
         scrollWheelZoom={false}

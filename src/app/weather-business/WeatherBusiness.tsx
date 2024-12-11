@@ -5,25 +5,29 @@ import Banner from './banner/Banner';
 import { City, MainData } from './core/models';
 import { getAirPollutionInCity, getWeatherInCity } from './core/requests';
 import MainContent from './main-content/MainContent';
+import { defaultCity } from '../App.consts';
 
-export interface WeatherContextProps {
-  units?: string;
-  city?: City;
-  data?: MainData;
-  setUnits?: (unit: string) => void;
-  setCity?: (city: City) => void;
+interface WeatherContextProps {
+  units: string;
+  city: City;
+  data: MainData | undefined;
+  setUnits: (unit: string) => void;
+  setCity: (city: City) => void;
 }
-export const WeatherContext = createContext<WeatherContextProps>({
+
+const defaultContext: WeatherContextProps = {
   units: 'metric',
-  city: { cityName: 'Ha Noi', coordinates: { lat: 21.0245, lon: 105.8412 } },
-});
+  city: defaultCity,
+  data: undefined,
+  setUnits: () => {},
+  setCity: () => {},
+};
+
+export const WeatherContext = createContext<WeatherContextProps>(defaultContext);
 
 const WeatherBusiness = () => {
   const [units, setUnits] = useState<string>('metric');
-  const [city, setCity] = useState<City>({
-    cityName: 'Ha Noi',
-    coordinates: { lat: 21.0245, lon: 105.8412 },
-  });
+  const [city, setCity] = useState<City>(defaultCity);
   const [data, setData] = useState<MainData | undefined>(undefined);
 
   const convertedSearchObject = map(

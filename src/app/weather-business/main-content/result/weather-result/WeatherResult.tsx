@@ -1,10 +1,10 @@
 import { useContext } from 'react';
-import { WeatherContext, WeatherContextProps } from '../../../WeatherBusiness';
+import { WeatherContext } from '../../../WeatherBusiness';
 import { isEqual, toNumber } from 'lodash-es';
 
 const WeatherResult = () => {
   const now = new Date();
-  const { city, data, units } = useContext<WeatherContextProps>(WeatherContext);
+  const { city, data, units } = useContext(WeatherContext);
   const { temp, weather, feels_like, wind_speed, pressure, humidity, dew_point, visibility } =
     data?.openWeather?.current ?? {};
   const day = now.getDate();
@@ -15,7 +15,7 @@ const WeatherResult = () => {
   const datetime = `${day}/${month}/${year}, ${hours}:${minutes}`;
 
   return (
-    <div className='flex flex-col space-y-[16px] w-full'>
+    <div className='flex flex-col space-y-[16px] w-full shadow-md h-fit rounded-[8px] p-4'>
       <div className='flex flex-col space-y-[8px]'>
         <p className='text-red-500 '>{datetime}</p>
         <h2 className='text-[24px] leading-[30px] font-bold'>{city?.cityName}</h2>

@@ -107,9 +107,16 @@ export interface Components {
   pm10?: number;
   nh3?: number;
 }
+export interface ListAirPollution {
+  components?: Components;
+  dt?: number;
+  main?: {
+    aqi?: number;
+  };
+}
 export interface AirPollution {
   coord?: Coordinates;
-  list?: Components[];
+  list?: ListAirPollution[];
 }
 export type AirPollutionResponse = AirPollution;
 
@@ -118,66 +125,3 @@ export interface MainData {
   airPollution?: AirPollution;
   openWeather?: OpenWeather;
 }
-
-export const headerData = [
-  {
-    id: 1,
-    title: '',
-  },
-  {
-    id: 2,
-    title: <span>CO</span>,
-  },
-  {
-    id: 3,
-    title: <span>NO</span>,
-  },
-  {
-    id: 4,
-    title: (
-      <span>
-        NO<sub>2</sub>
-      </span>
-    ),
-  },
-  {
-    id: 5,
-    title: (
-      <span>
-        O<sub>3</sub>
-      </span>
-    ),
-  },
-  {
-    id: 6,
-    title: (
-      <span>
-        SO<sub>2</sub>
-      </span>
-    ),
-  },
-  {
-    id: 7,
-    title: (
-      <span>
-        PM<sub>2.5</sub>
-      </span>
-    ),
-  },
-  {
-    id: 8,
-    title: (
-      <span>
-        PM<sub>10</sub>
-      </span>
-    ),
-  },
-  {
-    id: 9,
-    title: (
-      <span>
-        PH<sub>3</sub>
-      </span>
-    ),
-  },
-];

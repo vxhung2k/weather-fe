@@ -1,18 +1,19 @@
-import { useContext, useState } from 'react';
-import { Daily } from '../../../../core/models';
-import { WeatherContext, WeatherContextProps } from '../../../../WeatherBusiness';
-import { isEqual, map, toNumber } from 'lodash-es';
 import dayjs from 'dayjs';
+import { isEqual, map, toNumber } from 'lodash-es';
+import { useContext } from 'react';
 import { getNext8Days } from '../../../../../../utils/getNext8Days';
+import { Daily } from '../../../../core/models';
+import { WeatherContext } from '../../../../WeatherBusiness';
 
 interface Props {
   index?: number;
   data?: Daily;
+  isActive: boolean;
+  setIndexActive: (index: number | null) => void;
 }
 
-const DailyForecastItem = ({ index, data }: Props) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const { units } = useContext<WeatherContextProps>(WeatherContext);
+const DailyForecastItem = ({ index, data, isActive, setIndexActive }: Props) => {
+  const { units } = useContext(WeatherContext);
   const {
     weather,
     temp,
@@ -46,14 +47,16 @@ const DailyForecastItem = ({ index, data }: Props) => {
   const next8Days = getNext8Days();
 
   const toggleAccordion = () => {
-    setIsOpen(!isOpen);
+    setIndexActive(isActive ? null : index ?? null);
   };
 
   return (
     <div className='w-full'>
       <button
         type='button'
-        className='flex w-full justify-between items-center rounded-[8px] hover:bg-[#ececed] px-3'
+        className={`${
+          isActive ? 'bg-[#ececed]' : ''
+        } flex w-full justify-between items-center rounded-[8px] hover:bg-[#ececed] px-3`}
         onClick={toggleAccordion}
       >
         <span className='text-[14px] leading-[18px]'>{next8Days?.[toNumber(index)]?.date}</span>
@@ -69,7 +72,7 @@ const DailyForecastItem = ({ index, data }: Props) => {
             {description}
           </span>
           <svg
-            className={`w-6 h-6 ${isOpen ? 'transform rotate-180' : ''}`}
+            className={`w-6 h-6 ${isActive ? 'transform rotate-180' : ''}`}
             fill='currentColor'
             viewBox='0 0 20 20'
             xmlns='http://www.w3.org/2000/svg'
@@ -82,8 +85,8 @@ const DailyForecastItem = ({ index, data }: Props) => {
           </svg>
         </div>
       </button>
-      {isOpen && (
-        <div className='flex flex-col space-y-[24px]'>
+      {isActive && (
+        <div className='flex flex-col space-y-[24px] shadow-md p-4 rounded-[8px]'>
           <div className='flex items-center space-x-2'>
             <img src={`http://openweathermap.org/img/wn/${icon}.png`} alt='weather icon' />
             <p className='flex flex-col space-y-[8px]'>
